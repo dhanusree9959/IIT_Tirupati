@@ -1,0 +1,8 @@
+{
+  "status": "incorrect",
+  "title": "Likely Misinformation",
+  "details": [
+    "Text contains sensational claims.",
+    "Image does not verify the claim."
+  ]
+}
