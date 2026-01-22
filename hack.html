@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Misinformation Detection</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+<header>
+  <h1>AI-Based Misinformation Detection</h1>
+  <p>Text + Image Verification System</p>
+</header>
+
+<div class="container">
+
+  <h2>Enter News / Claim</h2>
+  <textarea id="textInput" placeholder="Paste news text or claim here..."></textarea>
+
+  <h2>Upload Image (Optional)</h2>
+  <input type="file" id="imageInput" accept="image/*">
+
+  <br>
+  <button onclick="analyze()">Verify Information</button>
+
+  <div id="output"></div>
+
+</div>
+
+<footer>
+  © All rights reserved
+</footer>
+
+<script>
+function analyze() {
+  const text = document.getElementById("textInput").value.toLowerCase();
+  const image = document.getElementById("imageInput").files.length;
+  const output = document.getElementById("output");
+
+  if (text.trim() === "" && image === 0) {
+    output.innerHTML = "<div class='result uncertain'>⚠️ Please enter text or upload an image.</div>";
+    return;
+  }
+
+  // Simulated AI rules (for hackathon demo)
+  const fakeKeywords = [
+    "100% cure",
+    "miracle",
+    "secret revealed",
+    "you won't believe",
+    "guaranteed result",
+    "shocking truth"
+  ];
+
+  let score = 0;
+  fakeKeywords.forEach(word => {
+    if (text.includes(word)) score++;
+  });
+
+  // Decision logic
+  if (score >= 2 && image === 1) {
+    output.innerHTML = `
+      <div class="result incorrect">
+        ❌ <b>Likely Misinformation</b><br><br>
+        🔍 Text contains sensational claims.<br>
+        🖼️ Image context cannot verify the claim.<br><br>
+        📌 Recommendation: Cross-check with trusted sources.
+      </div>`;
+  }
+  else if (score === 0 && text.length > 20) {
+    output.innerHTML = `
+      <div class="result correct">
+        ✅ <b>Possibly Correct Information</b><br><br>
+        🧠 Text does not match common misinformation patterns.<br>
+        📚 Still verify with official sources.
+      </div>`;
+  }
+  else {
+    output.innerHTML = `
+      <div class="result uncertain">
+        ⚠️ <b>Uncertain Information</b><br><br>
+        ℹ️ Insufficient evidence to verify accuracy.<br>
+        🔎 Manual verification recommended.
+      </div>`;
+  }
+}
+</script>
+
+</body>
+</html>
